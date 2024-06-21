@@ -51,20 +51,20 @@ Resources:
         - x86_64
       Policies:
         - Statement:
+          - Effect: Allow
+            Action:
+              - sagemaker:ListEndpoints
+              - sagemaker:DescribeEndpoint
+              - sagemaker:DescribeEndpointConfig
+              - sagemaker:ListNotebookInstances
+              - sagemaker:ListTags
+            Resource: '*'
+         - Statement:
             - Effect: Allow
               Action:
-                - sagemaker:ListEndpoints
-                - sagemaker:DescribeEndpoint
-                - sagemaker:DescribeEndpointConfig
-                - sagemaker:ListNotebookInstances
-                - sagemaker:ListTags
+                - sagemaker:DeleteEndpoint
+                - sagemaker:StopNotebookInstance
               Resource: '*'
-         - Statement:
-             - Effect: Allow
-               Action:
-                 - sagemaker:DeleteEndpoint
-                 - sagemaker:StopNotebookInstance
-               Resource: '*'
                   
       Events:
         CloudWatchEvent:
