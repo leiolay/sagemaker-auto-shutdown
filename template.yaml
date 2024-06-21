@@ -59,12 +59,12 @@ Resources:
               - sagemaker:ListNotebookInstances
               - sagemaker:ListTags
             Resource: '*'
-         - Statement:
-            - Effect: Allow
-              Action:
-                - sagemaker:DeleteEndpoint
-                - sagemaker:StopNotebookInstance
-              Resource: '*'
+        - Statement:
+          - Effect: Allow
+            Action:
+              - sagemaker:DeleteEndpoint
+              - sagemaker:StopNotebookInstance
+            Resource: '*'
                   
       Events:
         CloudWatchEvent:
