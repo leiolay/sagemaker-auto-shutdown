@@ -1,0 +1,9 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "genai-poc-sm-auto-shutdown"
+resolve_s3 = true
+s3_prefix = "genai-poc-sm-auto-shutdown"
+region = "ca-central-1"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "EndpointExcludeTagKey=\"env\" EndpointExcludeTagValue=\"prod\" NotebookExcludeTagKey=\"env\" NotebookExcludeTagValue=\"prod\""
+image_repositories = []
