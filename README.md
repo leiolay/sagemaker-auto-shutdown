@@ -14,6 +14,84 @@ This project creates a scheduled job that delete your SageMaker endpoints and sh
   * `MAX_COUNT`: The maximum number of Endpoints and Notebooks (counted separately) that is cleaned in on run. This is to limit the blast radius in case of misconfiguration.
   * `LOG_LEVEL`: log level. (`CRITICAL`, `ERROR`, `WARNING`, `INFO`, `DEBUG`. Default: `INFO`)
 
+## Security Policy that defines permissions required for deployment
+### Make sure to replace REGION, ACCOUNT, STACK NAME with your own settings
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:Get*",
+                "s3:List*",
+                "s3:Describe*",
+                "s3:Create*",
+                "s3:Put*",
+                "s3:Delete*"
+            ],
+            "Resource": "arn:aws:s3:::aws-sam-cli-managed-default-samclisourcebucket-*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:CreateChangeSet",
+                "cloudformation:ExecuteChangeSet",
+                "cloudformation:Describe*",
+                "cloudformation:EstimateTemplateCost",
+                "cloudformation:Get*",
+                "cloudformation:List*",
+                "cloudformation:ValidateTemplate",
+                "cloudformation:Detect*",
+                "cloudformation:DeleteStack"
+            ],
+            "Resource": [
+                "arn:aws:cloudformation:<REGION>:<ACCOUNT>:stack/aws-sam-cli-managed-default/*",
+                "arn:aws:cloudformation:<REGION>:aws:transform/Serverless-2016-10-31",
+                "arn:aws:cloudformation:<REGION>:<ACCOUNT>:stack/<STACK NAME>*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateRole",
+                "iam:TagRole",
+                "iam:PutRolePolicy",
+                "iam:AttachRolePolicy",
+                "iam:GetRole",
+                "iam:PassRole",
+                "iam:DeleteRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:DeleteRole"
+            ],
+            "Resource": "arn:aws:iam::<ACCOUNT>:role/<STACK NAME>-*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:CreateFunction",
+                "lambda:DeleteFunction",
+                "lambda:TagResource",
+                "lambda:GetFunction",
+                "lambda:AddPermission",
+                "lambda:RemovePermission"
+            ],
+            "Resource": "arn:aws:lambda:<REGION>:<ACCOUNT>:function:<STACK NAME>-*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "events:DescribeRule",
+                "events:PutRule",
+                "events:PutTargets",
+                "events:RemoveTargets"
+            ],
+            "Resource": "arn:aws:events:<REGION>:<ACCOUNT>:rule/<STACK NAME>-*"
+        }
+    ]
+}
+```
 ## Deploy the application
 
 To use the, you need the following tools:
