@@ -94,6 +94,7 @@ def stop_notebook_instances(client, notebook_names):
             continue
     logger.info('Stopped %s notebooks', count)
     return
+
 def get_jupyterlab_apps(client, state, config):
     logger.info('Getting %s jupyter apps', state)
     jupyterlab_apps = []
@@ -129,7 +130,7 @@ def delete_jupypterlab_apps(client, apps):
             count += 1
         except:
             countinue
-    logger.info("Deleted %s jupyterlab apps', count)
+    logger.info('Deleted %s jupyterlab apps', count)
     return
 
 def lambda_handler(event, context):
