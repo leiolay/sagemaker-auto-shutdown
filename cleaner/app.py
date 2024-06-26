@@ -94,6 +94,43 @@ def stop_notebook_instances(client, notebook_names):
             continue
     logger.info('Stopped %s notebooks', count)
     return
+def get_jupyterlab_apps(client, state, config):
+    logger.info('Getting %s jupyter apps', state)
+    jupyterlab_apps = []
+    apps = client.list_apps()["Apps"]
+    for each in apps:
+        if each['Status'] == state and each['AppType'] == 'JupyterLab':
+            app_name = each['AppName']
+            app_type = 'JupyterLab'
+            domain_id = each['DomainId']
+            space_name = each['SpaceName']
+            logger.debug('Will delete jupyterlab app: %s', app_name)
+            jupyterlab_apps.append(
+                {
+                    "AppName": app_name,
+                    "AppType": app_type,
+                    "DomainId": domain_id,
+                    "SpaceName": space_name
+                }
+            )
+    return jupyterlab_apps
+
+def delete_jupypterlab_apps(client, apps):
+    logger.info('Deleting jupyterlab apps')
+    count = 0
+    for app in apps:
+        try:
+            client.delete_app(
+                DomainId=app['DomainId'],
+                SpaceName=app['SpaceName'],
+                AppType=app['AppType'],
+                AppName=app['AppName']
+            )
+            count += 1
+        except:
+            countinue
+    logger.info("Deleted %s jupyterlab apps', count)
+    return
 
 def lambda_handler(event, context):
 
@@ -106,6 +143,9 @@ def lambda_handler(event, context):
 
     notebook_names = get_notebook_names(client, 'InService', config)
     stop_notebook_instances(client, notebook_names)
+
+    jupyterlab_apps = get_jupyterlab_apps(client, 'InService', config)
+    delete_jupypterlab_apps(client, jupyterlab_apps)
 
     return {
         'statusCode': 200,
