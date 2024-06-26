@@ -71,6 +71,8 @@ This project creates a scheduled job that delete your SageMaker endpoints and sh
             "Effect": "Allow",
             "Action": [
                 "lambda:CreateFunction",
+                "lambda:UpdateFunctionCode",
+                "lambda:UpdateFunctionConfiguration",
                 "lambda:DeleteFunction",
                 "lambda:TagResource",
                 "lambda:GetFunction",
