@@ -75,7 +75,8 @@ This project creates a scheduled job that delete your SageMaker endpoints and sh
                 "lambda:TagResource",
                 "lambda:GetFunction",
                 "lambda:AddPermission",
-                "lambda:RemovePermission"
+                "lambda:RemovePermission",
+                "lambda:ListTags"
             ],
             "Resource": "arn:aws:lambda:<REGION>:<ACCOUNT>:function:sagemaker-auto-shutdown-*"
         },
