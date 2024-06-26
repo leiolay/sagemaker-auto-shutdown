@@ -58,12 +58,14 @@ Resources:
               - sagemaker:DescribeEndpointConfig
               - sagemaker:ListNotebookInstances
               - sagemaker:ListTags
+              - sagemaker:ListApps
             Resource: '*'
         - Statement:
           - Effect: Allow
             Action:
               - sagemaker:DeleteEndpoint
               - sagemaker:StopNotebookInstance
+              - sagemaker:DeleteApp
               - s3:CreateBucket
             Resource: '*'
                   
